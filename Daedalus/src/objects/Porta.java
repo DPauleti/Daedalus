@@ -8,15 +8,15 @@ public class Porta extends Tile{
         super(symbol, position, false);
         this.chave = chave;
     }
-    public Porta(char symbol, Coordenada position, Coordenada keyPosition){
-        super(symbol, position, false);
-        this.chave = new Chave(Character.toLowerCase(symbol), keyPosition);
-    }
-    public boolean tryWalk() {
-        Inventario inventario = Inventario.getInstance();
+    public boolean tryWalk(Chave topChave) {
+        if (topChave != null && topChave.getSymbol() == this.chave.getSymbol()) {
+            this.unlock(); // Destranca a porta
+        }
+        return walkable;
     }
     public void unlock() {
-        return;
+        super.setPositionNull(); // Remove a porta do mapa
+        this.setWalkable(true); // Torna a porta caminhável
     }
 
 }

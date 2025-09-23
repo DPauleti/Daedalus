@@ -1,12 +1,12 @@
 package controllers;
+
+import model.Labirinto;
+import objects.Jogador;
 import structures.Coordenada;
 
 public class PlayerController {
-    private Coordenada playerPosition;
-
-    public Coordenada getPosition() {
-        return playerPosition;
-    }
+    private Jogador jogador;
+    private Labirinto labirinto;
 
     public void move(Coordenada position) {
         

@@ -1,5 +1,7 @@
-import objects.Chave;
+package model;
+
 import structures.Pilha;
+import objects.Chave;
 
 public class Inventario extends Pilha {
 
@@ -7,11 +9,13 @@ public class Inventario extends Pilha {
         super(capacidade);
     }
 
-    public void push(Chave chave) { // Chamado quando o jogador encosta numa chave
+    public boolean push(Chave chave) { // Chamado quando o jogador encosta numa chave
         try{
             super.push(chave);
+            return true;
         } catch (RuntimeException e) {
             // Pilha cheia, não coletar chave
+            return false;
         }
     }
 
@@ -20,6 +24,14 @@ public class Inventario extends Pilha {
             return (Chave) super.pop();
         } catch (RuntimeException e) {
             return null; // Pilha vazia, não há chave para usar
+        }
+    }
+
+    public Chave top() { // Ver a chave no topo da pilha sem removê-la
+        try{
+            return (Chave) super.top();
+        } catch (RuntimeException e) {
+            return null; // Pilha vazia, não há chave no topo
         }
     }
 }

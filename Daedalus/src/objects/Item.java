@@ -1,7 +1,9 @@
 package objects;
 
 public abstract class Item extends Tile{
-    public abstract void onTouch();
+    public void onTouch() {
+        super.setPositionNull();
+    };
     public Item(char symbol, structures.Coordenada position) {
         super(symbol, position, true);
     }

@@ -27,4 +27,13 @@ public class Pilha {
         }
         throw new RuntimeException("Pilha vazia");
     }
+
+    public Object top() {
+        for (int i = elementos.length - 1; i >= 0; i--) {
+            if (elementos[i] != null) {
+                return elementos[i];
+            }
+        }
+        throw new RuntimeException("Pilha vazia");
+    }
 }
