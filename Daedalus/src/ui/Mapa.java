@@ -20,4 +20,13 @@ public class Mapa {
             }
         }
     }
+
+    public void displayMapa() {
+        for (int i = 0; i < mapaVisual.length; i++) {
+            for (int j = 0; j < mapaVisual[i].length; j++) {
+                System.out.print(mapaVisual[i][j]);
+            }
+            System.out.println();
+        }
+    }
 }

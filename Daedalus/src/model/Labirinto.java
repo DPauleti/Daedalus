@@ -32,4 +32,10 @@ public class Labirinto extends Matriz {
         return '.'; // Retorna um ponto se não houver tile
     }
 
+    public void setTileAt(Coordenada position, Tile tile) {
+        if (isValidPosition(position)) {
+            set(position.getX(), position.getY(), tile);
+        }
+    }
+
 }

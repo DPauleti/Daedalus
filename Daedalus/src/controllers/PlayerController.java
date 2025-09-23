@@ -1,13 +1,17 @@
 package controllers;
 
+import model.Inventario;
 import model.Labirinto;
 import objects.Jogador;
+import objects.Porta;
+import objects.Tile;
 import structures.Coordenada;
 
 public class PlayerController {
     private Jogador jogador;
     private Labirinto labirinto;
     private int step;
+    private Inventario inventario;
 
     public PlayerController(Jogador jogador, Labirinto labirinto) {
         this.jogador = jogador;
@@ -16,7 +20,9 @@ public class PlayerController {
     }
 
     public void move(Coordenada position) {
-        
+        if (tryWalk(labirinto.getTileAt(position))) {
+            jogador.setPosition(position);
+        } // Implementar feedback de movimento inválido
     }
 
     public boolean commandInput(char command) {
@@ -34,5 +40,10 @@ public class PlayerController {
             return true;
         }
         return false; // Comando inválido
+    }
+
+    public boolean tryWalk(Tile tile) {
+        if (tile instanceof Porta) return ((Porta) tile).tryWalk(inventario.top());
+        return tile.tryWalk();
     }
 }
