@@ -1,10 +1,9 @@
 package app;
 
-import controllers.GameController;
+import controllers.GamestateController;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        GameController gameController = new GameController();
-        gameController.startGame();
+
     }
 }

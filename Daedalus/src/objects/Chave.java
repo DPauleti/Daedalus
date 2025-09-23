@@ -6,8 +6,4 @@ public class Chave extends Item{
         super(symbol, position);
     }
 
-    public void onTouch() {
-        super.onTouch();
-    }
-
 }
