@@ -1,19 +1,17 @@
-package ui;
+package io;
 
 import model.Labirinto;
 import structures.Coordenada;
 
 public class Mapa {
-    private Labirinto labirinto;
     private char[][] mapaVisual;
 
     public Mapa(Labirinto labirinto) {
-        this.labirinto = labirinto;
         this.mapaVisual = new char[labirinto.getRows()][labirinto.getCols()];
-        initializeMapaVisual();
+        initializeMapaVisual(labirinto);
     }
 
-    public void initializeMapaVisual() {
+    public void initializeMapaVisual(Labirinto labirinto) {
         for (int j = 0; j < labirinto.getCols(); j++) {
             for (int i = 0; i < labirinto.getRows(); i++) {
                 mapaVisual[i][j] = labirinto.getCharAt(Coordenada.toCoord(i, j));
@@ -29,5 +27,9 @@ public class Mapa {
             }
             System.out.println();
         }
+    }
+
+    public void drawPlayer(Coordenada position, char symbol) {
+        mapaVisual[position.getX()][position.getY()] = symbol;
     }
 }

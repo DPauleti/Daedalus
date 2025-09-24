@@ -1,4 +1,4 @@
-package ui;
+package io;
 
 public class Menu {
     
