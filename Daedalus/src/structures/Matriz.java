@@ -15,14 +15,14 @@ public class Matriz {
         if (row < 0 || row >= rows || col < 0 || col >= cols) {
             throw new IndexOutOfBoundsException("Índice fora dos limites da matriz");
         }
-        return grid[row][col];
+        return grid[col][row];
     }
 
     public void set(int row, int col, Object object) {
         if (row < 0 || row >= rows || col < 0 || col >= cols) {
             throw new IndexOutOfBoundsException("Índice fora dos limites da matriz");
         }
-        grid[row][col] = object;
+        grid[col][row] = object;
     }
 
     public int getRows() {

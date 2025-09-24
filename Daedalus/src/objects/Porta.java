@@ -2,7 +2,7 @@ package objects;
 import structures.Coordenada;
 
 
-public class Porta extends Tile{
+public class Porta extends Item{
     private Chave chave;
 
     public Porta(char symbol, Coordenada position){
@@ -15,14 +15,14 @@ public class Porta extends Tile{
     }
     
     public boolean tryWalk(Chave topChave) {
-        if (topChave != null && topChave.getSymbol() == this.chave.getSymbol()) {
+        if (topChave != null && topChave == chave) {
             this.unlock(); // Destranca a porta
         }
         return walkable;
     }
 
     public void unlock() {
-        super.setPositionNull(); // Remove a porta do mapa
+        super.onTouch(); // Virar chão
         this.setWalkable(true); // Torna a porta caminhável
     }
 
