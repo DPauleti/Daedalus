@@ -26,4 +26,12 @@ public class Porta extends Item{
         this.setWalkable(true); // Torna a porta caminhável
     }
 
+    public void setChave(Chave chave) {
+        this.chave = chave;
+    }
+
+    public Chave getChave() {
+        return chave;
+    }
+
 }

@@ -25,17 +25,17 @@ public class PlayerController {
         } // Implementar feedback de movimento inválido
     }
 
-    public boolean commandInput(char command) {
-        if (command == 'w') {
+    public boolean commandInput(String command) {
+        if (command == "up") {
             move(new Coordenada(getPlayerPosition().getX() - step, getPlayerPosition().getY()));
             return true;
-        } else if (command == 's') {
+        } else if (command == "down") {
             move(new Coordenada(getPlayerPosition().getX() + step, getPlayerPosition().getY()));
             return true;
-        } else if (command == 'a') {
+        } else if (command == "left") {
             move(new Coordenada(getPlayerPosition().getX(), getPlayerPosition().getY() - step));
             return true;
-        } else if (command == 'd') {
+        } else if (command == "right") {
             move(new Coordenada(getPlayerPosition().getX(), getPlayerPosition().getY() + step));
             return true;
         }

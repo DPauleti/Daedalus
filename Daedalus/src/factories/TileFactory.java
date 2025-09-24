@@ -1,7 +1,5 @@
 package factories;
 
-import java.util.List;
-
 import objects.Tile;
 
 public abstract class TileFactory {
@@ -21,15 +19,23 @@ public abstract class TileFactory {
                 return new objects.Tesouro(position);
             }
 
-            List<Character> caracteresRestritos = List.of('S', 'E', 'T'); // Estes caracteres não representam portas ou chaves
+            char[] caracteresRestritos = {'S', 'E', 'T'}; // Estes caracteres não podem ser portas ou chaves
 
             char restrictedUpperSymbol = Character.toUpperCase(symbol);
 
-            if (Character.isUpperCase(symbol) && !caracteresRestritos.contains(restrictedUpperSymbol)) {
+            boolean isRestricted = false;
+            for (char c : caracteresRestritos) {
+                if (c == restrictedUpperSymbol) {
+                    isRestricted = true;
+                    break;
+                }
+            }
+
+            if (Character.isUpperCase(symbol) && !isRestricted) {
                 return new objects.Porta(symbol, position);
             }
             
-            if (Character.isLowerCase(symbol) && !caracteresRestritos.contains(restrictedUpperSymbol)) {
+            if (Character.isLowerCase(symbol) && !isRestricted) {
                 return new objects.Chave(symbol, position);
             }
 
