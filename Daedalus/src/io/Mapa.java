@@ -5,13 +5,15 @@ import structures.Coordenada;
 
 public class Mapa {
     private char[][] mapaVisual;
+    private Labirinto labirinto;
 
     public Mapa(Labirinto labirinto) {
+        this.labirinto = labirinto;
         this.mapaVisual = new char[labirinto.getRows()][labirinto.getCols()];
-        initializeMapaVisual(labirinto);
+        gerarMapaVisual(labirinto);
     }
 
-    public void initializeMapaVisual(Labirinto labirinto) {
+    public void gerarMapaVisual(Labirinto labirinto) {
         for (int j = 0; j < labirinto.getCols(); j++) {
             for (int i = 0; i < labirinto.getRows(); i++) {
                 mapaVisual[i][j] = labirinto.getCharAt(Coordenada.toCoord(i, j));
@@ -30,6 +32,7 @@ public class Mapa {
     }
 
     public void drawPlayer(Coordenada position, char symbol) {
+        gerarMapaVisual(labirinto); // Redesenha o mapa para limpar a posição anterior do jogador
         mapaVisual[position.getX()][position.getY()] = symbol;
     }
 }

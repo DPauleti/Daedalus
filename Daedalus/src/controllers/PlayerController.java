@@ -28,23 +28,24 @@ public class PlayerController {
     }
 
     public boolean commandInput(String command) {
-        if (command == "up") {
+        if (command.equals("up")) {
             return move(new Coordenada(getPlayerPosition().getX() - step, getPlayerPosition().getY()));
-        } else if (command == "down") {
+        } else if (command.equals("down")) {
             move(new Coordenada(getPlayerPosition().getX() + step, getPlayerPosition().getY()));
             return true;
-        } else if (command == "left") {
+        } else if (command.equals("left")) {
             return move(new Coordenada(getPlayerPosition().getX(), getPlayerPosition().getY() - step));
-        } else if (command == "right") {
+        } else if (command.equals("right")) {
             return move(new Coordenada(getPlayerPosition().getX(), getPlayerPosition().getY() + step));
         }
-        if (command == "invalid") {
+        if (command.equals("invalid")) {
             return false;
         }
         return false; // Comando inválido
     }
 
     public boolean tryWalk(Tile tile) {
+        if (tile == null) return false; // Não pode andar em uma tile inexistente
         if (tile instanceof Porta) 
             if (((Porta) tile).tryWalk(inventario.top())) {
                 inventario.pop(); // Remove a chave do inventário

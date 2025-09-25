@@ -13,9 +13,9 @@ public class Labirinto extends Matriz {
         try {
             get(position.getX(), position.getY());
             return true;
-        } catch (IndexOutOfBoundsException e) {
+        } catch (Exception e) {
             return false;
-        }
+        } 
     }
 
     public Tile getTileAt(Coordenada position) {
