@@ -19,25 +19,24 @@ public class PlayerController {
         this.inventario = new Inventario(inventorySize);
     }
 
-    public void move(Coordenada position) {
+    public boolean move(Coordenada position) {
         if (tryWalk(labirinto.getTileAt(position))) {
             setPlayerPosition(position);
+            return true;
         } // Implementar feedback de movimento inválido
+        return false;
     }
 
     public boolean commandInput(String command) {
         if (command == "up") {
-            move(new Coordenada(getPlayerPosition().getX() - step, getPlayerPosition().getY()));
-            return true;
+            return move(new Coordenada(getPlayerPosition().getX() - step, getPlayerPosition().getY()));
         } else if (command == "down") {
             move(new Coordenada(getPlayerPosition().getX() + step, getPlayerPosition().getY()));
             return true;
         } else if (command == "left") {
-            move(new Coordenada(getPlayerPosition().getX(), getPlayerPosition().getY() - step));
-            return true;
+            return move(new Coordenada(getPlayerPosition().getX(), getPlayerPosition().getY() - step));
         } else if (command == "right") {
-            move(new Coordenada(getPlayerPosition().getX(), getPlayerPosition().getY() + step));
-            return true;
+            return move(new Coordenada(getPlayerPosition().getX(), getPlayerPosition().getY() + step));
         }
         if (command == "invalid") {
             return false;
@@ -46,7 +45,12 @@ public class PlayerController {
     }
 
     public boolean tryWalk(Tile tile) {
-        if (tile instanceof Porta) return ((Porta) tile).tryWalk(inventario.top());
+        if (tile instanceof Porta) 
+            if (((Porta) tile).tryWalk(inventario.top())) {
+                inventario.pop(); // Remove a chave do inventário
+                return true;
+            }
+            else return false;
         return tile.tryWalk();
     }
 
@@ -68,6 +72,10 @@ public class PlayerController {
             }
         }
         return Coordenada.nullCoord(); // Retorna uma coordenada nula se não encontrar o ponto de início
+    }
+
+    public Inventario getInventario() {
+        return inventario;
     }
 
 }

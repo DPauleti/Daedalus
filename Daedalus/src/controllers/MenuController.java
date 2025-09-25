@@ -17,8 +17,6 @@ public class MenuController {
         menu.telaInicial(nome);
     }
 
-
-
     public char lerComando() {
         return input.lerChar();
     }
