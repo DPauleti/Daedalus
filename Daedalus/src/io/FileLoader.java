@@ -9,12 +9,17 @@ public class FileLoader {
     private int inventorySize;
     private char[][] mapData;
 
-    public FileLoader(String mapFile) {
-        loadParameters(mapFile);
-        loadMap(mapFile);
+    public FileLoader(String mapFile) throws Exception {
+        try {
+            loadParameters(mapFile);
+            loadMap(mapFile);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        
     }
 
-    public void loadParameters(String mapFile) {
+    public void loadParameters(String mapFile) throws Exception {
         try {
             File file = new File(mapFile);
             Scanner scanner = new Scanner(file);
@@ -26,12 +31,13 @@ public class FileLoader {
 
             scanner.close();
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred while loading the map file.");
+            System.out.println("O arquivo especificado não pode ser lido.");
             e.printStackTrace();
+            throw e;
         }
     }
 
-    public void loadMap(String mapFile) {
+    public void loadMap(String mapFile) throws Exception {
         try {
             File file = new File(mapFile);
             Scanner scanner = new Scanner(file);
@@ -45,11 +51,13 @@ public class FileLoader {
             }
             scanner.close();
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred while loading the map file.");
+            System.out.println("O arquivo especificado não pode ser lido.");
             e.printStackTrace();
+            throw new RuntimeException(e);
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Map data is inconsistent with specified dimensions.");
+            System.out.println("As dimensões do mapa não correspondem aos dados fornecidos.");
             e.printStackTrace();
+            throw e;
         }
     }
 

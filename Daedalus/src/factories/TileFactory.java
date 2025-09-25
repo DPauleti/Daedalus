@@ -19,7 +19,7 @@ public abstract class TileFactory {
                 return new objects.Tesouro(position);
             }
 
-            char[] caracteresRestritos = {'S', 'E', 'T'}; // Estes caracteres não podem ser portas ou chaves
+            char[] caracteresRestritos = {'S', 'T'}; // Estes caracteres não podem ser portas ou chaves
 
             char restrictedUpperSymbol = Character.toUpperCase(symbol);
 

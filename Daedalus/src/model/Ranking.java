@@ -1,35 +1,31 @@
 package model;
 
 import structures.Matriz;
+import structures.ScoreEntry;
 
 import java.util.Arrays;
 
-public class Ranking extends Matriz {
-
+public class Ranking {
     private ScoreEntry[] entries;
-    private int playersCount;
 
-    public Ranking(int totalJogos) {
-        super(3, totalJogos); // 3 linhas: posição, nome, pontuação
-        this.entries = new ScoreEntry[totalJogos];
-        this.playersCount = 0;
+    public Ranking() {
+        this.entries = new ScoreEntry[99]; // Guarda 99 pontuações
     }
 
-    public void addEntry(String nome, int pontuacao) {
-        ScoreEntry entry = new ScoreEntry(nome, pontuacao);
-        entries[playersCount] = entry;
+    public void addEntry(ScoreEntry entry) {
+        for (int i = 0; i < entries.length; i++) {
+            if (entries[i] == null) {
+                entries[i] = entry;
+                return;
+            }
+        }
+        System.out.println("Ranking cheio! Não é possível adicionar mais entradas.");
 
-        // Adiciona na matriz
-        set(0, playersCount, playersCount + 1); // posição
-        set(1, playersCount, nome);      // nome
-        set(2, playersCount, pontuacao); // pontuação
-
-        playersCount++;
     }
 
     // Ordenação por Insertion Sort (pontuação decrescente)
     public void insertionSort() {
-        for (int i = 1; i < playersCount; i++) {
+        for (int i = 1; i < entries.length; i++) {
             ScoreEntry key = entries[i];
             int j = i - 1;
             while (j >= 0 && entries[j].pontuacao < key.pontuacao) {
@@ -42,7 +38,7 @@ public class Ranking extends Matriz {
     }
 
     public void quickSort() {
-        quickSort(0, playersCount - 1);
+        quickSort(0, entries.length - 1);
         atualizarMatriz();
     }
 
@@ -75,7 +71,7 @@ public class Ranking extends Matriz {
 
     // Busca linear por nome
     public void binarySearchByName(String nome) {
-        ScoreEntry[] copia = Arrays.copyOf(entries, playersCount);
+        ScoreEntry[] copia = Arrays.copyOf(entries, entries.length);
 
         // insertion sort por nome
         for (int i = 1; i < copia.length; i++) {
@@ -106,7 +102,7 @@ public class Ranking extends Matriz {
     }
 
     private void atualizarMatriz() {
-        for (int i = 0; i < playersCount; i++) {
+        for (int i = 0; i < entries.length; i++) {
             set(0, i, i + 1);
             set(1, i, entries[i].nome);
             set(2, i, entries[i].pontuacao);

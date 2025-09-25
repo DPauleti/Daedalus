@@ -1,7 +1,7 @@
 package objects;
 
 public abstract class Item extends Tile{
-    public boolean interacted = false;
+    private boolean interacted = false;
     public Item(char symbol, structures.Coordenada position) {
         super(symbol, position, true);
     }

@@ -39,6 +39,9 @@ public class PlayerController {
             move(new Coordenada(getPlayerPosition().getX(), getPlayerPosition().getY() + step));
             return true;
         }
+        if (command == "invalid") {
+            return false;
+        }
         return false; // Comando inválido
     }
 
