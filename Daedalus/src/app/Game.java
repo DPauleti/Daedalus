@@ -16,19 +16,55 @@ public class Game {
     private PlayerController playerController;
     private char playerSymbol = '@';
     private MenuController menuController;
+    private boolean gameActive = true;
     public static void main(String[] args) {
-        try {
-            Game game = new Game();
-            game.initializeMap("src/labirintos/labirinto1.txt");
-            game.initializePlayer();
-            game.drawMap();
+        Game game = new Game();
+        try { 
+            game.initializeGame("src/labirintos/labirinto1.txt");
         } catch (Exception e) {
             System.out.println("Erro ao inicializar o jogo: " + e.getMessage());
         }
+
+        game.initialPrints();
+        game.gameActive = true;
+
+        while (game.gameActive) {
+            game.drawMap();
+            System.out.println();
+            String comando = game.menuController.comando();
+            if (comando.equals("invalid")) {
+                System.out.println("Comando inválido! Use W, A, S, D para se mover.");
+                continue;
+            }
+            boolean moved = game.playerController.commandInput(comando);
+            if (moved) {
+                // Check for exit
+                // Subtract walking points
+                // Check for item interaction
+                // Log item interaction
+            } else {
+                System.out.println("Movimento inválido! Tente outra direção.");
+            }
+            System.out.println();
+        }
+
     }
 
     public Game() {
         
+    }
+
+    public void initializeGame(String mapFile) throws Exception {
+        initializeMenu();
+        initializeMap(mapFile);
+        initializePlayer();
+    }
+
+    public void initialPrints() {
+        menuController.nome();
+        System.out.println();
+        menuController.instrucoes();
+        System.out.println();
     }
 
     public void initializeMap(String mapFile) throws Exception {
@@ -41,7 +77,6 @@ public class Game {
 
     public void initializeMenu() {
         this.menuController = new MenuController();
-        menuController.nome();
     }
 
     public void initializePlayer() {

@@ -21,6 +21,10 @@ public class MenuController {
         return input.lerChar();
     }
 
+    public void instrucoes() {
+        menu.instrucao();
+    }
+
     public String comando() {
         char playerInput = lerComando();
         switch (playerInput) {
