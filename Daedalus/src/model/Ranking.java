@@ -27,19 +27,19 @@ public class Ranking {
     public void insertionSort() {
         for (int i = 1; i < entries.length; i++) {
             ScoreEntry key = entries[i];
+            if (key == null) continue;
+
             int j = i - 1;
-            while (j >= 0 && entries[j].pontuacao < key.pontuacao) {
+            while (j >= 0 && entries[j].getPontuacao() < key.getPontuacao()) {
                 entries[j + 1] = entries[j];
                 j--;
             }
             entries[j + 1] = key;
         }
-        atualizarMatriz();
     }
 
     public void quickSort() {
         quickSort(0, entries.length - 1);
-        atualizarMatriz();
     }
 
     private void quickSort(int low, int high) {
@@ -51,10 +51,11 @@ public class Ranking {
     }
 
     private int partition(int low, int high) {
-        int pivot = entries[high].pontuacao;
+        int pivot = entries[high].getPontuacao();
+
         int i = low - 1;
         for (int j = low; j < high; j++) {
-            if (entries[j].pontuacao >= pivot) {
+            if (entries[j].getPontuacao() >= pivot) {
                 i++;
                 trocar(i, j);
             }
@@ -77,7 +78,7 @@ public class Ranking {
         for (int i = 1; i < copia.length; i++) {
             ScoreEntry key = copia[i];
             int j = i - 1;
-            while (j >= 0 && copia[j].nome.compareToIgnoreCase(key.nome) > 0) {
+            while (j >= 0 && copia[j].getNome().compareToIgnoreCase(key.getNome()) > 0) {
                 copia[j + 1] = copia[j];
                 j--;
             }
@@ -88,7 +89,7 @@ public class Ranking {
         int right = copia.length - 1;
         while (left <= right) {
             int mid = (left + right) / 2;
-            int cmp = copia[mid].nome.compareToIgnoreCase(nome);
+            int cmp = copia[mid].getNome().compareToIgnoreCase(nome);
             if (cmp == 0) {
                 System.out.println("Encontrado: " + copia[mid]);
                 return;
@@ -101,11 +102,12 @@ public class Ranking {
         System.out.println("Jogador '" + nome + "' não encontrado.");
     }
 
-    private void atualizarMatriz() {
-        for (int i = 0; i < entries.length; i++) {
-            set(0, i, i + 1);
-            set(1, i, entries[i].nome);
-            set(2, i, entries[i].pontuacao);
+    public void printRanking() {
+        System.out.println("Ranking de Pontuações:");
+        for (ScoreEntry entry : entries) {
+            if (entry != null) {
+                System.out.println(entry.getNome() + ": " + entry.getPontuacao());
+            }
         }
     }
 }
