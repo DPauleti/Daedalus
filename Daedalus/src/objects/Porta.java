@@ -2,15 +2,22 @@ package objects;
 import structures.Coordenada;
 
 
-public class Porta extends Item{
+public class Porta extends PointsItem{
     private Chave chave;
 
     public Porta(char symbol, Coordenada position){
-        super(symbol, position, false);
+        super(symbol, position, 15);
+        this.walkable = false;
+    }
+
+    public Porta(char symbol, Coordenada position, int points){
+        super(symbol, position, points);
+        this.walkable = false;
     }
 
     public Porta(char symbol, Coordenada position, Chave chave){
-        super(symbol, position, false);
+        super(symbol, position, 15);
+        this.walkable = false;
         this.chave = chave;
     }
     
@@ -33,5 +40,6 @@ public class Porta extends Item{
     public Chave getChave() {
         return chave;
     }
+
 
 }

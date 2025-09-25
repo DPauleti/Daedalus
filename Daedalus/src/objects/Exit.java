@@ -4,7 +4,8 @@ import structures.Coordenada;
 
 public class Exit extends Porta {
     public Exit(Coordenada position) {
-        super('E', position);
+        super('E', position, 100);
     }
+
   
 }

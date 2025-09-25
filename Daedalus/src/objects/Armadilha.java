@@ -2,9 +2,10 @@ package objects;
 
 import structures.Coordenada;
 
-public class Armadilha extends Item{
-    private int value;
+public class Armadilha extends PointsItem{
+
     public Armadilha(Coordenada position) {
-        super('T', position);
+        super('T', position, -20);
     }
+
 }

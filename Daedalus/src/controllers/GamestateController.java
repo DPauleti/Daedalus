@@ -19,5 +19,15 @@ public class GamestateController {
 
     public void walk() {
         addPoints(-walkCost);
+        nextTurn();
+    }
+
+    public int getTurn () {
+        return turn;
+
+    }
+
+    public void nextTurn() {
+        turn++;
     }
 }
