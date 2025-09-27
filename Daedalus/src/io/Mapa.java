@@ -25,7 +25,7 @@ public class Mapa {
         for (int i = 0; i < mapaVisual.length; i++) {
             for (int j = 0; j < mapaVisual[i].length; j++) {
                 //System.out.println("("+j + "," + i + "): "); // Debug: imprime coordenadas e caracteres
-                System.out.print(mapaVisual[i][j]);
+                System.out.print(mapaVisual[j][i]);
             }
             System.out.println();
         }

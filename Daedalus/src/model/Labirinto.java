@@ -11,7 +11,7 @@ public class Labirinto extends Matriz {
 
     public boolean isValidPosition(Coordenada position) {
         try {
-            get(position.getX(), position.getY());
+            get(position.getY(), position.getX());
             return true;
         } catch (Exception e) {
             return false;
@@ -22,7 +22,7 @@ public class Labirinto extends Matriz {
         if (!isValidPosition(position)) {
             return null;
         }
-        return (Tile) get(position.getX(), position.getY());
+        return (Tile) get(position.getY(), position.getX());
     }
 
     public char getCharAt(Coordenada position) {
@@ -34,7 +34,7 @@ public class Labirinto extends Matriz {
 
     public void setTileAt(Coordenada position, Tile tile) {
         if (isValidPosition(position)) {
-            set(position.getX(), position.getY(), tile);
+            set(position.getY(), position.getX(), tile);
         }
     }
 

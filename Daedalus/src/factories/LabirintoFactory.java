@@ -9,7 +9,7 @@ public abstract class LabirintoFactory {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 char symbol = layout[i][j];
-                Coordenada position = Coordenada.toCoord(i, j);
+                Coordenada position = Coordenada.toCoord(j, i);
                 labirinto.setTileAt(position, TileFactory.createTile(symbol, position));
             }
         }

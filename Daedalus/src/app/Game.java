@@ -1,11 +1,10 @@
 package app;
 
-import controllers.MenuController;
-import controllers.PlayerController;
+import controllers.*;
 import factories.*;
 import io.*;
 import model.*;
-import objects.Chave;
+import objects.*;
 import validation.LabirintoValidator;
 
 public class Game {
@@ -22,6 +21,7 @@ public class Game {
             game.initializeGame("src/labirintos/labirinto1.txt");
         } catch (Exception e) {
             System.out.println("Erro ao inicializar o jogo: " + e.getMessage());
+            return;
         }
 
         game.initialPrints();
@@ -37,10 +37,17 @@ public class Game {
             }
             boolean moved = game.playerController.commandInput(comando);
             if (moved) {
-                // Check for exit
-                // Subtract walking points
-                // Check for item interaction
-                // Log item interaction
+                Tile tile = game.playerController.getPlayerTile();
+                boolean interacted;
+                if (tile instanceof Item) {
+                    interacted = ((Item) tile).interacted(); 
+                    if (tile instanceof PointsItem && interacted == false) game.menuController.points(((PointsItem) tile).getPoints());
+                    // Check for exit
+                    // Subtract walking points
+                    // Check for item interaction
+                    // Log item interaction
+                    ((Item) tile).interact(); // Interaction with item complete, prevent duplicate interactions
+                }
             } else {
                 System.out.println("Movimento inválido! Tente outra direção.");
             }

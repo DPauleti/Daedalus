@@ -16,7 +16,14 @@ public abstract class Item extends Tile{
 
     public void onTouch() { // Ação padrão ao tocar no item: remover do mapa
         // Configurar ações diferentes para cada item
-        this.interacted = true;
         this.symbol = '.';
     };
-}
+
+    public boolean interacted() {
+        return interacted;
+    }
+
+    public void interact() {
+        this.interacted = true;
+    }
+ }

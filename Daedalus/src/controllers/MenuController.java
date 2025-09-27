@@ -39,4 +39,9 @@ public class MenuController {
         }
         return "invalid";
     }
+
+    public void points(int points) {
+        if (points > 0) menu.gainPoints(points);
+        if (points < 0) menu.losePoints(-points);
+    }
 }

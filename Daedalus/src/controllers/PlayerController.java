@@ -30,14 +30,13 @@ public class PlayerController {
 
     public boolean commandInput(String command) {
         if (command.equals("up")) {
-            return move(new Coordenada(getPlayerPosition().getX() - step, getPlayerPosition().getY()));
-        } else if (command.equals("down")) {
-            move(new Coordenada(getPlayerPosition().getX() + step, getPlayerPosition().getY()));
-            return true;
-        } else if (command.equals("left")) {
             return move(new Coordenada(getPlayerPosition().getX(), getPlayerPosition().getY() - step));
-        } else if (command.equals("right")) {
+        } else if (command.equals("down")) {
             return move(new Coordenada(getPlayerPosition().getX(), getPlayerPosition().getY() + step));
+        } else if (command.equals("left")) {
+            return move(new Coordenada(getPlayerPosition().getX() - step, getPlayerPosition().getY()));
+        } else if (command.equals("right")) {
+            return move(new Coordenada(getPlayerPosition().getX() + step, getPlayerPosition().getY()));
         }
         if (command.equals("invalid")) {
             return false;
@@ -83,11 +82,13 @@ public class PlayerController {
     }
 
     public void collectChave(objects.Chave chave) {
-        if (inventario.push(chave)) {
-            // Prints for debugging, change to proper class later
-            System.out.println("Chave " + chave.getSymbol() + " coletada!");
-        } else {
-            System.out.println("Inventário cheio! Não foi possível coletar a chave.");
+        if (!chave.interacted()) {
+            if (inventario.push(chave)) {
+                // Prints for debugging, change to proper class later
+                System.out.println("Chave " + chave.getSymbol() + " coletada!");
+            } else {
+                System.out.println("Inventário cheio! Não foi possível coletar a chave.");
+            }
         }
     }
 

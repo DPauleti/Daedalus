@@ -21,6 +21,14 @@ public class Menu {
     public void nickname() {
         System.out.print("Digite seu nome: ");
     }
+
+    public void gainPoints(int points) {
+        System.out.println("Você ganhou " + points + " pontos!");
+    }
+
+    public void losePoints(int points) {
+        System.out.println("Você perdeu " + points + " pontos!");
+    }
     
 
 

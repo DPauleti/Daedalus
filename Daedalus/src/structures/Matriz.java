@@ -12,7 +12,7 @@ public class Matriz {
     }
 
     public Object get(int row, int col) {
-        if (row < 0 || row > rows || col < 0 || col > cols) {
+        if (row < 0 || row >= rows || col < 0 || col >= cols) {
             throw new IndexOutOfBoundsException("Índice fora dos limites da matriz");
         }
         return grid[row][col];
