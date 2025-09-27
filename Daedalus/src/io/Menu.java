@@ -11,10 +11,14 @@ public class Menu {
     }
     public void instrucao() {
         System.out.println("[W], [A], [S], [D] para se mover");
+        System.out.println("[I] para mostrar seu inventário");
+
         System.out.println("Paredes são '#', caminhos são '.'");
         System.out.println("Portas são letras maiúsculas, chaves são letras minúsculas");
         System.out.println("Tesouros são representados por '$', armadilhas por 'T'");
         System.out.println("Seu personagem é representado por '@'");
+
+        System.out.println("Você só pode usar a última chave do seu inventário");
         System.out.println("Tente chegar à saída 'E' com a maior pontuação possível!");
 
     }
@@ -29,7 +33,18 @@ public class Menu {
     public void losePoints(int points) {
         System.out.println("Você perdeu " + points + " pontos!");
     }
-    
+
+    public void inventory(String inventory) {
+        System.out.println(inventory);
+    }
+
+    public void invalid() {
+        System.out.println("Comando inválido! Use W, A, S, D para se mover e I para acessar seu inventário.");
+    }
+
+    public void chave(char chave) {
+        System.out.println("Você coletou a chave " + chave + "!");
+    }
 
 
 

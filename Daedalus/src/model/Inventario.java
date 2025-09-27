@@ -34,4 +34,21 @@ public class Inventario extends Pilha {
             return null; // Pilha vazia, não há chave no topo
         }
     }
+
+        public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+
+        boolean first = true;
+        for (Object elemento : elementos) {
+            if (elemento != null) {
+                if (!first) sb.append(", ");
+                sb.append(((Chave)elemento).chave());
+                first = false;
+            }
+        }
+
+        sb.append("]");
+        return sb.toString();
+    }
 }

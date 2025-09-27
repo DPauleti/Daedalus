@@ -36,6 +36,8 @@ public class MenuController {
             return "down";
         case 'd':
             return "right";
+        case 'i':
+            return "inventory";
         }
         return "invalid";
     }
@@ -43,5 +45,17 @@ public class MenuController {
     public void points(int points) {
         if (points > 0) menu.gainPoints(points);
         if (points < 0) menu.losePoints(-points);
+    }
+
+    public void inventory(String inventario) {
+        menu.inventory(inventario);
+    }
+
+    public void invalid() {
+        menu.invalid();
+    }
+
+    public void chave(char chave) {
+        menu.chave(chave);
     }
 }

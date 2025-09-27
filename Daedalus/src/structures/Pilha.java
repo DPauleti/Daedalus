@@ -1,7 +1,7 @@
 package structures;
 
 public class Pilha {
-    private Object[] elementos;
+    protected Object[] elementos;
 
     public Pilha(int capacidade) {
         elementos = new Object[capacidade];
@@ -35,5 +35,22 @@ public class Pilha {
             }
         }
         throw new RuntimeException("Pilha vazia");
+    }
+
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+
+        boolean first = true;
+        for (Object elemento : elementos) {
+            if (elemento != null) {
+                if (!first) sb.append(", ");
+                sb.append(elemento);
+                first = false;
+            }
+        }
+
+        sb.append("]");
+        return sb.toString();
     }
 }

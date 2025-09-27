@@ -12,6 +12,7 @@ public class Game {
     private Mapa mapa;
     private Labirinto labirinto;
     private PlayerController playerController;
+    private GamestateController gamestateController;
     private char playerSymbol = '@';
     private MenuController menuController;
     private boolean gameActive = true;
@@ -32,21 +33,31 @@ public class Game {
             System.out.println();
             String comando = game.menuController.comando();
             if (comando.equals("invalid")) {
-                System.out.println("Comando inválido! Use W, A, S, D para se mover.");
+                game.menuController.invalid();
+                continue;
+            }
+            if (comando.equals("inventory")) {
+                game.menuController.inventory(game.playerController.getInventario().toString());
                 continue;
             }
             boolean moved = game.playerController.commandInput(comando);
             if (moved) {
+                game.gamestateController.walk(); // Subtract walking points
                 Tile tile = game.playerController.getPlayerTile();
                 boolean interacted;
-                if (tile instanceof Item) {
-                    interacted = ((Item) tile).interacted(); 
+                if (tile instanceof Item) { // Check for item interaction
+                    interacted = ((Item) tile).interacted();
+                    if (tile instanceof Chave && interacted == false) {
+                        game.playerController.collectChave(((Chave) tile)); // Add key to inventory
+                        game.menuController.chave(((Chave) tile).chave()); // Display key get message
+                        // Log key collection
+                    }
                     if (tile instanceof PointsItem && interacted == false) game.menuController.points(((PointsItem) tile).getPoints());
-                    // Check for exit
-                    // Subtract walking points
-                    // Check for item interaction
+                    
+
                     // Log item interaction
                     ((Item) tile).interact(); // Interaction with item complete, prevent duplicate interactions
+                    if (tile instanceof Exit) game.gameActive = false; // Implement game end logic
                 }
             } else {
                 System.out.println("Movimento inválido! Tente outra direção.");
@@ -63,6 +74,7 @@ public class Game {
     public void initializeGame(String mapFile) throws Exception {
         initializeMenu();
         initializeMap(mapFile);
+        initializeGamestate();
         initializePlayer();
     }
 
@@ -88,6 +100,10 @@ public class Game {
     public void initializePlayer() {
         this.playerController = new PlayerController(labirinto, fileLoader.getInventorySize());
         this.playerController.setPlayerPosition(playerController.getStartPosition());
+    }
+
+    public void initializeGamestate() {
+        this.gamestateController = new GamestateController();
     }
 
     public void drawMap() {

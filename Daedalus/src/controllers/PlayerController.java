@@ -52,8 +52,6 @@ public class PlayerController {
                 return true;
             }
             else return false;
-        if (tile instanceof Chave) // Lógica para chaves
-            collectChave((Chave) tile);
         return tile.tryWalk();
     }
 
@@ -81,15 +79,8 @@ public class PlayerController {
         return inventario;
     }
 
-    public void collectChave(objects.Chave chave) {
-        if (!chave.interacted()) {
-            if (inventario.push(chave)) {
-                // Prints for debugging, change to proper class later
-                System.out.println("Chave " + chave.getSymbol() + " coletada!");
-            } else {
-                System.out.println("Inventário cheio! Não foi possível coletar a chave.");
-            }
-        }
+    public void collectChave(Chave chave) {
+        inventario.push(chave);
     }
 
     public Tile getPlayerTile() {
