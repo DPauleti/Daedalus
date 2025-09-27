@@ -1,6 +1,5 @@
 package model;
 
-import structures.Matriz;
 import structures.ScoreEntry;
 
 import java.util.Arrays;

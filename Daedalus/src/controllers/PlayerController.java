@@ -2,6 +2,7 @@ package controllers;
 
 import model.Inventario;
 import model.Labirinto;
+import objects.Chave;
 import objects.Porta;
 import objects.Tile;
 import structures.Coordenada;
@@ -46,12 +47,14 @@ public class PlayerController {
 
     public boolean tryWalk(Tile tile) {
         if (tile == null) return false; // Não pode andar em uma tile inexistente
-        if (tile instanceof Porta) 
+        if (tile instanceof Porta) // Lógica para portas
             if (((Porta) tile).tryWalk(inventario.top())) {
                 inventario.pop(); // Remove a chave do inventário
                 return true;
             }
             else return false;
+        if (tile instanceof Chave) // Lógica para chaves
+            collectChave((Chave) tile);
         return tile.tryWalk();
     }
 
@@ -77,6 +80,19 @@ public class PlayerController {
 
     public Inventario getInventario() {
         return inventario;
+    }
+
+    public void collectChave(objects.Chave chave) {
+        if (inventario.push(chave)) {
+            // Prints for debugging, change to proper class later
+            System.out.println("Chave " + chave.getSymbol() + " coletada!");
+        } else {
+            System.out.println("Inventário cheio! Não foi possível coletar a chave.");
+        }
+    }
+
+    public Tile getPlayerTile() {
+        return labirinto.getTileAt(playerPosition);
     }
 
 }

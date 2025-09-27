@@ -1,12 +1,11 @@
 package app;
 
-import java.io.File;
-
 import controllers.MenuController;
 import controllers.PlayerController;
 import factories.*;
 import io.*;
 import model.*;
+import objects.Chave;
 import validation.LabirintoValidator;
 
 public class Game {
