@@ -46,6 +46,11 @@ public class Menu {
         System.out.println("Você coletou a chave " + chave + "!");
     }
 
+    public void gameEnd(int points, int turns) {
+        System.out.println("Você chegou na saída em " + turns +" movimentos!");
+        System.out.println("Pontuação final: " + points);
+    }
+
 
 
 }

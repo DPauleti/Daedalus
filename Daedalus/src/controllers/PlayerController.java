@@ -3,6 +3,7 @@ package controllers;
 import model.Inventario;
 import model.Labirinto;
 import objects.Chave;
+import objects.Item;
 import objects.Porta;
 import objects.Tile;
 import structures.Coordenada;
@@ -46,12 +47,16 @@ public class PlayerController {
 
     public boolean tryWalk(Tile tile) {
         if (tile == null) return false; // Não pode andar em uma tile inexistente
-        if (tile instanceof Porta) // Lógica para portas
-            if (((Porta) tile).tryWalk(inventario.top())) {
-                inventario.pop(); // Remove a chave do inventário
-                return true;
+        if (tile instanceof Porta) {// Lógica para portas
+            if (((Item) tile).interacted() == false){
+                if (((Porta) tile).tryWalk(inventario.top())) {
+                        inventario.pop(); // Remove a chave do inventário
+                        return true;
+                    }
+                else return false;
             }
-            else return false;
+            else return true;
+        }
         return tile.tryWalk();
     }
 

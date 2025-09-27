@@ -29,6 +29,7 @@ public class Game {
         game.gameActive = true;
 
         while (game.gameActive) {
+            System.out.println();
             game.drawMap();
             System.out.println();
             String comando = game.menuController.comando();
@@ -41,8 +42,7 @@ public class Game {
                 continue;
             }
             boolean moved = game.playerController.commandInput(comando);
-            if (moved) {
-                game.gamestateController.walk(); // Subtract walking points
+            if (moved) {                
                 Tile tile = game.playerController.getPlayerTile();
                 boolean interacted;
                 if (tile instanceof Item) { // Check for item interaction
@@ -52,18 +52,27 @@ public class Game {
                         game.menuController.chave(((Chave) tile).chave()); // Display key get message
                         // Log key collection
                     }
-                    if (tile instanceof PointsItem && interacted == false) game.menuController.points(((PointsItem) tile).getPoints());
-                    
+                    if (tile instanceof PointsItem && interacted == false){
+                        game.menuController.points(((PointsItem) tile).getPoints()); // Display points message
+                        game.gamestateController.addPoints(((PointsItem) tile).getPoints());// Alter points
+                        // Log item interaction
+                    }                    
 
                     // Log item interaction
                     ((Item) tile).interact(); // Interaction with item complete, prevent duplicate interactions
                     if (tile instanceof Exit) game.gameActive = false; // Implement game end logic
                 }
+                game.gamestateController.walk(); // Subtract walking points
+                // Increment turn counter
             } else {
                 System.out.println("Movimento inválido! Tente outra direção.");
             }
-            System.out.println();
+
         }
+        System.out.println();
+        game.menuController.gameEnd(game.gamestateController.getPoints(), game.gamestateController.getTurn());
+
+
 
     }
 

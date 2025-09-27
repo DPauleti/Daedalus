@@ -58,4 +58,8 @@ public class MenuController {
     public void chave(char chave) {
         menu.chave(chave);
     }
+
+    public void gameEnd(int points, int turns) {
+        menu.gameEnd(points, turns);
+    }
 }
