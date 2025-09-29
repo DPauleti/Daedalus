@@ -2,8 +2,6 @@ package model;
 
 import structures.ScoreEntry;
 
-import java.util.Arrays;
-
 public class Ranking {
     private ScoreEntry[] entries;
 
@@ -27,8 +25,8 @@ public class Ranking {
         for (int i = 1; i < entries.length; i++) {
             ScoreEntry key = entries[i];
             if (key == null) continue;
-
             int j = i - 1;
+
             while (j >= 0 && entries[j].getPontuacao() < key.getPontuacao()) {
                 entries[j + 1] = entries[j];
                 j--;
@@ -38,14 +36,17 @@ public class Ranking {
     }
 
     public void quickSort() {
-        quickSort(0, entries.length - 1);
+        for (int i = entries.length - 1; i >= 0; i--)
+            if (entries[i] != null) {
+                quickSort(0, i); // define o low e o high (primeiro e o último elemento)
+            }
     }
 
     private void quickSort(int low, int high) {
         if (low < high) {
             int pi = partition(low, high);
-            quickSort(low, pi - 1);
-            quickSort(pi + 1, high);
+            quickSort(low, pi - 1); // atualiza o high
+            quickSort(pi + 1, high); // atualiza o low
         }
     }
 
@@ -70,35 +71,43 @@ public class Ranking {
     }
 
     // Busca linear por nome
-    public void binarySearchByName(String nome) {
-        ScoreEntry[] copia = Arrays.copyOf(entries, entries.length);
+    public int binarySearchByName(String nome) {
+        int count = 0;
+        for (ScoreEntry entry : entries) {
+            if (entry != null) count++;
+        }
 
-        // insertion sort por nome
-        for (int i = 1; i < copia.length; i++) {
-            ScoreEntry key = copia[i];
-            int j = i - 1;
-            while (j >= 0 && copia[j].getNome().compareToIgnoreCase(key.getNome()) > 0) {
-                copia[j + 1] = copia[j];
-                j--;
+        ScoreEntry[] copia = new ScoreEntry[count];
+        int idx = 0;
+        for (ScoreEntry entry : entries) {
+            if (entry != null) {
+                copia[idx++] = entry;
             }
-            copia[j + 1] = key;
         }
 
         int left = 0;
         int right = copia.length - 1;
+        
         while (left <= right) {
             int mid = (left + right) / 2;
-            int cmp = copia[mid].getNome().compareToIgnoreCase(nome);
-            if (cmp == 0) {
-                System.out.println("Encontrado: " + copia[mid]);
-                return;
-            } else if (cmp < 0) {
+            int compare = copia[mid].getNome().compareToIgnoreCase(nome);
+            if (compare == 0) {
+                for (int i = 0; i < entries.length; i++) {
+                    if (entries[i] != null && entries[i].equals(copia[mid])) {
+                        System.out.println("Encontrado: " + entries[i].getNome() + " com pontuação " + entries[i].getPontuacao());
+                        return i;
+                    }
+                }
+            return -1;
+            } else if (compare < 0) {
                 left = mid + 1;
             } else {
                 right = mid - 1;
             }
+            
         }
         System.out.println("Jogador '" + nome + "' não encontrado.");
+        return -1;
     }
 
     public void printRanking() {
