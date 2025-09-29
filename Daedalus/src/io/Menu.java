@@ -51,6 +51,23 @@ public class Menu {
         System.out.println("Pontuação final: " + points);
     }
 
+    public void logPrompt() {
+        System.out.println("Gostaria de ver o resumo do seu jogo? [s/n] ");
+    }
+
+    public void displayLog(String log) {
+        System.out.println("Eventos do jogo: ");
+        System.out.println(log);
+    }
+
+    public void showPoints(String player, int points) {
+        System.out.printf("[" + player + " --- Pontos: " + "%03d" + "]", points);
+    }
+
+    public void movimentoInvalido() {
+        System.out.println("Movimento inválido! Tente outra direção.");
+    }
+
 
 
 }

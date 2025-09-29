@@ -7,7 +7,7 @@ public class GamestateController {
 
     public GamestateController() {
         this.points = 0;
-        this.turn = 0;
+        this.turn = 1;
     }
 
     public void addPoints(int points) {

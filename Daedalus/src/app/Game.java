@@ -16,6 +16,7 @@ public class Game {
     private char playerSymbol = '@';
     private MenuController menuController;
     private boolean gameActive = true;
+    private LogController logController;
     public static void main(String[] args) {
         Game game = new Game();
         try { 
@@ -26,53 +27,8 @@ public class Game {
         }
 
         game.initialPrints();
-        game.gameActive = true;
-
-        while (game.gameActive) {
-            System.out.println();
-            game.drawMap();
-            System.out.println();
-            String comando = game.menuController.comando();
-            if (comando.equals("invalid")) {
-                game.menuController.invalid();
-                continue;
-            }
-            if (comando.equals("inventory")) {
-                game.menuController.inventory(game.playerController.getInventario().toString());
-                continue;
-            }
-            boolean moved = game.playerController.commandInput(comando);
-            if (moved) {                
-                Tile tile = game.playerController.getPlayerTile();
-                boolean interacted;
-                if (tile instanceof Item) { // Check for item interaction
-                    interacted = ((Item) tile).interacted();
-                    if (tile instanceof Chave && interacted == false) {
-                        game.playerController.collectChave(((Chave) tile)); // Add key to inventory
-                        game.menuController.chave(((Chave) tile).chave()); // Display key get message
-                        // Log key collection
-                    }
-                    if (tile instanceof PointsItem && interacted == false){
-                        game.menuController.points(((PointsItem) tile).getPoints()); // Display points message
-                        game.gamestateController.addPoints(((PointsItem) tile).getPoints());// Alter points
-                        // Log item interaction
-                    }                    
-
-                    // Log item interaction
-                    ((Item) tile).interact(); // Interaction with item complete, prevent duplicate interactions
-                    if (tile instanceof Exit) game.gameActive = false; // Implement game end logic
-                }
-                game.gamestateController.walk(); // Subtract walking points
-                // Increment turn counter
-            } else {
-                System.out.println("Movimento inválido! Tente outra direção.");
-            }
-
-        }
-        System.out.println();
-        game.menuController.gameEnd(game.gamestateController.getPoints(), game.gamestateController.getTurn());
-
-
+        game.runGame();
+        game.end();
 
     }
 
@@ -84,6 +40,7 @@ public class Game {
         initializeMenu();
         initializeMap(mapFile);
         initializeGamestate();
+        initializeLog();
         initializePlayer();
     }
 
@@ -111,6 +68,10 @@ public class Game {
         this.playerController.setPlayerPosition(playerController.getStartPosition());
     }
 
+    public void initializeLog() {
+        this.logController = new LogController();
+    }
+
     public void initializeGamestate() {
         this.gamestateController = new GamestateController();
     }
@@ -118,5 +79,62 @@ public class Game {
     public void drawMap() {
         mapa.drawPlayer(playerController.getPlayerPosition(), playerSymbol);
         mapa.displayMapa();
+    }
+
+    public void drawHUD() {
+        menuController.showHUD(menuController.getNome(), gamestateController.getPoints());
+    }
+
+    public void drawUI() {
+        System.out.println();
+        drawMap();
+        drawHUD();
+    }
+
+    public void runGame() {
+        gameActive = true;
+        logController.startEntry(menuController.getNome());
+        while (gameActive) {
+            drawUI();
+            String comando = menuController.comando();
+            if (comando.equals("invalid")) {
+                menuController.invalid();
+                continue;
+            }
+            if (comando.equals("inventory")) {
+                menuController.inventory(playerController.getInventario().toString());
+                continue;
+            }
+            boolean moved = playerController.commandInput(comando);
+            if (moved) {                
+                Tile tile = playerController.getPlayerTile();
+                boolean interacted;
+                if (tile instanceof Item) { // Check for item interaction
+                    interacted = ((Item) tile).interacted();
+                    if (tile instanceof Chave && interacted == false) {
+                        playerController.collectChave(((Chave) tile)); // Add key to inventory
+                        menuController.chave(((Chave) tile).chave()); // Display key get message
+                    }
+                    if (tile instanceof PointsItem && interacted == false){
+                        menuController.points(((PointsItem) tile).getPoints()); // Display points message
+                        gamestateController.addPoints(((PointsItem) tile).getPoints());// Alter points
+                    }                    
+
+                    logController.itemEntry((Item) tile, gamestateController.getTurn(), menuController.getNome()); // Log item interaction
+                    ((Item) tile).interact(); // Interaction with item complete, prevent duplicate interactions
+                    if (tile instanceof Exit) gameActive = false; // Implement game end logic
+                }
+                gamestateController.walk(); // Subtract walking points and increment turn counter
+            } else {
+                menuController.movimentoInvalido();
+            }
+
+        }
+        menuController.gameEnd(gamestateController.getPoints(), gamestateController.getTurn());
+    }
+
+    public void end() {
+        menuController.displayLog(logController.getLog());
+        // Adicionar função do ranking aqui
     }
 }

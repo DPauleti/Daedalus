@@ -5,6 +5,7 @@ import io.*;
 public class MenuController {
     private Menu menu;
     private InputReader input;
+    private String nome;
 
     public MenuController() {
         this.menu = new Menu();
@@ -13,7 +14,7 @@ public class MenuController {
 
     public void nome() {
         menu.nickname();
-        String nome = input.lerString();
+        this.nome = input.lerString();
         menu.telaInicial(nome);
     }
 
@@ -61,5 +62,24 @@ public class MenuController {
 
     public void gameEnd(int points, int turns) {
         menu.gameEnd(points, turns);
+    }
+
+    public void displayLog(String log) {
+        menu.logPrompt();
+        if (Character.toLowerCase(input.lerChar()) == 's') menu.displayLog(log);
+    }
+
+    public String getNome() {
+        if (nome == null) return "";
+        return nome;
+    }
+
+    public void showHUD(String player, int points) {       
+        menu.showPoints(player, points);
+        System.out.println();
+    }
+
+    public void movimentoInvalido() {
+        menu.movimentoInvalido();
     }
 }
