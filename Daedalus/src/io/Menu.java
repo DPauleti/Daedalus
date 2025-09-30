@@ -10,16 +10,19 @@ public class Menu {
         System.out.println("Você andou para " + comando + "!");
     }
     public void instrucao() {
+        System.out.println("--------------------------------------------------------");
+
         System.out.println("[W], [A], [S], [D] para se mover");
-        System.out.println("[I] para mostrar seu inventário");
+        System.out.println("[I] para mostrar seu inventário \n");
 
         System.out.println("Paredes são '#', caminhos são '.'");
         System.out.println("Portas são letras maiúsculas, chaves são letras minúsculas");
         System.out.println("Tesouros são representados por '$', armadilhas por 'T'");
-        System.out.println("Seu personagem é representado por '@'");
+        System.out.println("Seu personagem é representado por '@'\n");
 
         System.out.println("Você só pode usar a última chave do seu inventário");
         System.out.println("Tente chegar à saída 'E' com a maior pontuação possível!");
+        System.out.println("--------------------------------------------------------");
 
     }
     public void nickname() {

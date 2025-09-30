@@ -135,6 +135,6 @@ public class Game {
 
     public void end() {
         menuController.displayLog(logController.getLog());
-        // Adicionar função do ranking aqui
+        menuController.rankingMenu();
     }
 }
