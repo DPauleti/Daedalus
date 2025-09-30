@@ -27,9 +27,10 @@ public class Game {
             return;
         }
 
+
         game.name();
 
-        char input = game.mainMenu();
+        char input = ' ';
         do {
             if (input == '1') {
             game.instructions();
@@ -37,11 +38,10 @@ public class Game {
             game.end();
             }
             if (input == '2') {
-            // Implementar funcionalidade do ranking
-
+            game.rankingController.rankingMenu("ranking.csv");
             }
-            game.mainMenu();} 
-        while (input != '3');
+            input = game.mainMenu();} 
+        while (input != '0');
         game.menuController.exit();
     }
 
@@ -152,10 +152,12 @@ public class Game {
 
     public void end() {
         menuController.displayLog(logController.getLog());
-        rankingController.salvarPontuacao(menuController.getNome(), gamestateController.getPoints(), menuController.saveScore());
-        rankingController.saveToCSV("ranking.csv");
-        rankingController.loadFromCSV("ranking.csv");
-        if (menuController.showRankingMenu()) rankingController.rankingMenu();
+        if (menuController.saveScore()) {
+            rankingController.loadFromCSV("ranking.csv");
+            rankingController.salvarPontuacao(menuController.getNome(), gamestateController.getPoints());
+            rankingController.saveToCSV("ranking.csv");
+        }
+        
     }
 
 

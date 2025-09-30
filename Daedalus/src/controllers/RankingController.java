@@ -17,19 +17,25 @@ public class RankingController {
   private Menu menu;
   private InputReader input;
   private int opcao;
+  private boolean loaded;
+  private boolean sorted;
   
   public RankingController() {
     this.ranking = new Ranking();
     this.menu = new Menu();
     this.input = new InputReader();
+    this.loaded = false;
+    this.sorted = false;
   }   
   
-  public void salvarPontuacao(String nome, int pontuacao, boolean save) {
+  public void salvarPontuacao(String nome, int pontuacao) {
     ScoreEntry entry = new ScoreEntry(nome, pontuacao);
-    if (save) ranking.addEntry(entry);
+    ranking.addEntry(entry);
   }
   
-  public void rankingMenu() {    
+  public void rankingMenu(String filePath) {    
+    if (!loaded) loadFromCSV(filePath);// Carrega o ranking se o usuário acessa o menu sem salvar pontuação
+    if (!sorted) quickSort(); // Ordena o ranking na primeira vez que o menu é acessado
     do {
       menu.rankingMenuOptions();
       opcao = input.lerInt();
@@ -44,9 +50,8 @@ public class RankingController {
         String nome = input.lerString();
         binarySearchByName(nome);
         break;
-        
+
         case 0:
-        menu.exit();
         break;
         
         default:
@@ -59,9 +64,15 @@ public class RankingController {
   
   public void printRanking() {
     System.out.println("Ranking de Pontuações:");
+    int position = 1;
     for (ScoreEntry entry : ranking.getEntries()) {
       if (entry != null) {
-        System.out.println(entry.getNome() + ": " + entry.getPontuacao());
+        String fName = entry.getNome();
+        if (fName.length() > 7) fName = fName.substring(0, 5) + ".."; // Se o nome for maior, coloca pontos no final
+        while (fName.length() < 7) fName = fName + " "; // Formata o nome para ter exatamente 5 caracteres
+        System.out.printf("%02d" + ". " + fName + " " + "%03d", position, entry.getPontuacao());
+        System.out.println();
+        position++;
       }
     }
   }
@@ -86,6 +97,7 @@ public class RankingController {
     if (ranking.getEntries()[i] != null) {
       quickSort(0, i); // define o low e o high (primeiro e o último elemento)
     }
+    sorted = true;
   }
   
   private void quickSort(int low, int high) {
@@ -167,6 +179,7 @@ public class RankingController {
         }
       }
       System.out.println("Ranking salvo em: " + filePath);
+      loaded = false;
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -186,6 +199,8 @@ public class RankingController {
         }
       }
       System.out.println("Ranking carregado de: " + filePath);
+      loaded = true;
+      sorted = false;
     } catch (IOException e) {
       e.printStackTrace();
     }

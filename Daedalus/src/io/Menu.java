@@ -75,7 +75,7 @@ public class Menu {
     public void mainMenu() {
         System.out.println("1. Jogar");
         System.out.println("2. Pontuações");
-        System.out.println("3. Sair");
+        System.out.println("0. Sair");
     }
 
     public void scorePrompt() {
