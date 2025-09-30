@@ -18,6 +18,7 @@ public class Menu {
         System.out.println("Paredes são '#', caminhos são '.'");
         System.out.println("Portas são letras maiúsculas, chaves são letras minúsculas");
         System.out.println("Tesouros são representados por '$', armadilhas por 'T'");
+        System.out.println("Portais são 'O', pisar em um te leva para o outro");
         System.out.println("Seu personagem é representado por '@'\n");
 
         System.out.println("Você só pode usar a última chave do seu inventário");

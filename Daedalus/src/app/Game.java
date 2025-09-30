@@ -152,7 +152,7 @@ public class Game {
 
     public void end() {
         menuController.displayLog(logController.getLog());
-        rankingController.salvarPontuacao(menuController.getNome(), gamestateController.getPoints(), menuController.saveScore(););
+        rankingController.salvarPontuacao(menuController.getNome(), gamestateController.getPoints(), menuController.saveScore());
         menuController.rankingMenu();
     }
 

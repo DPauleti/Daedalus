@@ -89,28 +89,28 @@ public class MenuController {
         return false;
     }
     
-    public void rankingMenu() {    
+    public void rankingmenu() {    
         do {
-            menu.rankingMenu();
-            this.opcao = input.lerInt();
+            menu.rankingmenu();
+            this.opcao = input.lerint();
             
             switch (opcao) {
                 case 1:
-                    rankingController.printRanking();
+                    rankingcontroller.printranking();
                     break;
                 
                 case 2:
-                    System.out.print("Digite o nome que deseja buscar: ");
-                    this.nome = input.lerString();
-                    rankingController.binarySearchByName(nome);
+                    system.out.print("digite o nome que deseja buscar: ");
+                    this.nome = input.lerstring();
+                    rankingcontroller.binarysearchbyname(nome);
                     break;
                 
                 case 0:
-                    System.out.println("Obrigado por jogar!");
+                    system.out.println("obrigado por jogar!");
                     break;
                 
                 default:
-                    System.out.println("Opção inválida, tente novamente.");
+                    system.out.println("opção inválida, tente novamente.");
                     break;
             }
             

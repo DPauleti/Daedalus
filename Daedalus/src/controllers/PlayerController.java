@@ -5,6 +5,7 @@ import model.Labirinto;
 import objects.Chave;
 import objects.Item;
 import objects.Porta;
+import objects.Portal;
 import objects.Tile;
 import structures.Coordenada;
 
@@ -24,6 +25,8 @@ public class PlayerController {
     public boolean move(Coordenada position) {
         if (tryWalk(labirinto.getTileAt(position))) {
             setPlayerPosition(position);
+            if (getPlayerTile() instanceof Portal) 
+                setPlayerPosition(((Portal) getPlayerTile()).getLinkedPortal().getPosition());
             return true;
         } // Implementar feedback de movimento inválido
         return false;

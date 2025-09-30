@@ -4,6 +4,7 @@ import model.Labirinto;
 import objects.Chave;
 import objects.Exit;
 import objects.Porta;
+import objects.Portal;
 import objects.Start;
 import structures.Coordenada;
 
@@ -15,6 +16,7 @@ public abstract class LabirintoValidator {
             }
             validateDoorsKeys(labirinto);
             validateEntranceExit(labirinto);
+            validatePortals(labirinto);
         } catch (IllegalArgumentException e) {
             System.out.println("Erro na validação do labirinto: " + e.getMessage());
             throw new RuntimeException(e);
@@ -76,5 +78,30 @@ public abstract class LabirintoValidator {
         if (!(foundExit == 1)) {
             throw new IllegalArgumentException("Labirinto inválido: o labirinto deve conter exatamente uma saída 'E'");
         }
+    }
+
+    public static void validatePortals(Labirinto labirinto) {
+        Portal portal1 = null;
+        Portal portal2 = null;
+        boolean linked = false;
+
+        for (int i = 0; i < labirinto.getRows(); i++) {
+            for (int j = 0; j < labirinto.getCols(); j++) {
+                if (labirinto.getTileAt(Coordenada.toCoord(j, i)) instanceof Portal) {
+                    if (linked == false) {
+                        if (portal1 != null) {
+                            portal2 = (Portal) labirinto.getTileAt(Coordenada.toCoord(j, i));
+                            portal1.link(portal2);
+                            portal2.link(portal1);
+                            linked = true;
+                        } else portal1 = (Portal) labirinto.getTileAt(Coordenada.toCoord(j, i));
+                    } 
+                    else throw new IllegalArgumentException("Labirinto inválido: o labirinto não pode conter mais que 2 portais");
+                }
+            }
+        }
+
+        if (linked == false && portal1 != null)
+            throw new IllegalArgumentException("Labirinto inválido: o labirinto não pode conter um portal sem par");
     }
 }
