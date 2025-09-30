@@ -17,6 +17,7 @@ public class Game {
     private MenuController menuController;
     private boolean gameActive = true;
     private LogController logController;
+    private RankingController rankingController;
     public static void main(String[] args) {
         Game game = new Game();
         try { 
@@ -26,10 +27,22 @@ public class Game {
             return;
         }
 
-        game.initialPrints();
-        game.runGame();
-        game.end();
+        game.name();
 
+        char input = game.mainMenu();
+        do {
+            if (input == '1') {
+            game.instructions();
+            game.runGame();
+            game.end();
+            }
+            if (input == '2') {
+            // Implementar funcionalidade do ranking
+
+            }
+            game.mainMenu();} 
+        while (input != '3');
+        game.menuController.exit();
     }
 
     public Game() {
@@ -41,11 +54,11 @@ public class Game {
         initializeMap(mapFile);
         initializeGamestate();
         initializeLog();
+        initializeRanking();
         initializePlayer();
     }
 
-    public void initialPrints() {
-        menuController.nome();
+    public void instructions() {
         System.out.println();
         menuController.instrucoes();
         System.out.println();
@@ -70,6 +83,10 @@ public class Game {
 
     public void initializeLog() {
         this.logController = new LogController();
+    }
+
+    public void initializeRanking() {
+        this.rankingController = new RankingController();
     }
 
     public void initializeGamestate() {
@@ -135,6 +152,15 @@ public class Game {
 
     public void end() {
         menuController.displayLog(logController.getLog());
+        rankingController.salvarPontuacao(menuController.getNome(), gamestateController.getPoints(), menuController.saveScore(););
         menuController.rankingMenu();
+    }
+
+    public char mainMenu() {
+        return menuController.mainMenu();
+    }
+
+    public void name() {
+        menuController.nome();
     }
 }

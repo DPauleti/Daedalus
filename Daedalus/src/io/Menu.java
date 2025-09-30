@@ -71,6 +71,26 @@ public class Menu {
         System.out.println("Movimento inválido! Tente outra direção.");
     }
 
+    public void mainMenu() {
+        System.out.println("1. Jogar");
+        System.out.println("2. Pontuações");
+        System.out.println("3. Sair");
+    }
 
+    public void scorePrompt() {
+        System.out.println("Deseja salvar sua pontuação no ranking? [s/n]");
+    }
+
+    public void rankingMenu() {
+        System.out.println("\n--- MENU RANKING ---");
+        System.out.println("1. Ver ranking");
+        System.out.println("2. Buscar nome");
+        System.out.println("0. Sair");
+        System.out.print("Escolha uma opção: ");
+    }
+
+    public void exit() {
+        System.out.println("Obrigado por jogar!");
+    }
 
 }

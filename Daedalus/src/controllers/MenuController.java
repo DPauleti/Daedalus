@@ -1,25 +1,21 @@
 package controllers;
 
 import io.*;
-import model.Ranking;
 
 public class MenuController {
     private Menu menu;
-    private RankingController rankingController;
     private InputReader input;
     private String nome;
     private int opcao;
     
     public MenuController() {
         this.menu = new Menu();
-        this.rankingController = new RankingController(new Ranking());
         this.input = new InputReader();
     }
     
     public void nome() {
         menu.nickname();
         this.nome = input.lerString();
-        menu.telaInicial(nome);
     }
     
     public char lerComando() {
@@ -87,19 +83,15 @@ public class MenuController {
         menu.movimentoInvalido();
     }
 
-    public void saveScore(String nome, int points) {
-        System.out.println("Deseja salvar sua pontuação no ranking? [s/n]");
-        rankingController.salvarPontuacao(nome, points);
+    public boolean saveScore() {
+        menu.scorePrompt();
+        if (Character.toLowerCase(input.lerChar()) == 's') return true;
+        return false;
     }
     
     public void rankingMenu() {    
         do {
-            System.out.println("\n--- MENU RANKING ---");
-            System.out.println("1. Ver ranking");
-            System.out.println("2. Buscar nome");
-            System.out.println("0. Sair");
-            System.out.print("Escolha uma opção: ");
-            
+            menu.rankingMenu();
             this.opcao = input.lerInt();
             
             switch (opcao) {
@@ -123,5 +115,15 @@ public class MenuController {
             }
             
         } while (opcao != 0);
+    }
+
+    public char mainMenu() {
+        menu.telaInicial(nome);
+        menu.mainMenu();
+        return lerComando();
+    }
+
+    public void exit() {
+        menu.exit();
     }
 }

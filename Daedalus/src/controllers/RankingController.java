@@ -13,13 +13,13 @@ public class RankingController {
   
   private Ranking ranking;
   
-  public RankingController(Ranking ranking) {
-    this.ranking = ranking;
+  public RankingController() {
+    this.ranking = new Ranking();
   }   
   
-  public void salvarPontuacao(String nome, int pontuacao) {
+  public void salvarPontuacao(String nome, int pontuacao, boolean save) {
     ScoreEntry entry = new ScoreEntry(nome, pontuacao);
-    ranking.addEntry(entry);
+    if (save) ranking.addEntry(entry);
   }
   
     public void printRanking() {
