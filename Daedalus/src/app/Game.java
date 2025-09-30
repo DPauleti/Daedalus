@@ -153,8 +153,11 @@ public class Game {
     public void end() {
         menuController.displayLog(logController.getLog());
         rankingController.salvarPontuacao(menuController.getNome(), gamestateController.getPoints(), menuController.saveScore());
-        menuController.rankingMenu();
+        rankingController.saveToCSV("ranking.csv");
+        rankingController.loadFromCSV("ranking.csv");
+        if (menuController.showRankingMenu()) rankingController.rankingMenu();
     }
+
 
     public char mainMenu() {
         return menuController.mainMenu();

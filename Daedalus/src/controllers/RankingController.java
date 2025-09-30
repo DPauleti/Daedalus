@@ -8,13 +8,20 @@ import java.io.IOException;
 
 import model.Ranking;
 import structures.ScoreEntry;
+import io.InputReader;
+import io.Menu;
 
 public class RankingController {
   
   private Ranking ranking;
+  private Menu menu;
+  private InputReader input;
+  private int opcao;
   
   public RankingController() {
     this.ranking = new Ranking();
+    this.menu = new Menu();
+    this.input = new InputReader();
   }   
   
   public void salvarPontuacao(String nome, int pontuacao, boolean save) {
@@ -22,14 +29,42 @@ public class RankingController {
     if (save) ranking.addEntry(entry);
   }
   
-    public void printRanking() {
-        System.out.println("Ranking de Pontuações:");
-        for (ScoreEntry entry : ranking.getEntries()) {
-            if (entry != null) {
-                System.out.println(entry.getNome() + ": " + entry.getPontuacao());
-            }
-        }
+  public void rankingMenu() {    
+    do {
+      menu.rankingMenuOptions();
+      opcao = input.lerInt();
+      
+      switch (opcao) {
+        case 1:
+        printRanking();
+        break;
+        
+        case 2:
+        menu.searchByNamePrompt();
+        String nome = input.lerString();
+        binarySearchByName(nome);
+        break;
+        
+        case 0:
+        menu.exit();
+        break;
+        
+        default:
+        menu.invalidCase();
+        break;
+      }
+      
+    } while (opcao != 0);
+  }
+  
+  public void printRanking() {
+    System.out.println("Ranking de Pontuações:");
+    for (ScoreEntry entry : ranking.getEntries()) {
+      if (entry != null) {
+        System.out.println(entry.getNome() + ": " + entry.getPontuacao());
+      }
     }
+  }
   
   // Ordenação por Insertion Sort (pontuação decrescente)
   public void insertionSort() {
@@ -140,12 +175,14 @@ public class RankingController {
   public void loadFromCSV(String filePath) {
     try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
       String line = reader.readLine(); // Ignora cabeçalho
+      int index = 0;
+
       while ((line = reader.readLine()) != null) {
         String[] parts = line.split(",");
         if (parts.length == 2) {
           String nome = parts[0];
           int pontuacao = Integer.parseInt(parts[1]);
-          ranking.addEntry(new ScoreEntry(nome, pontuacao));
+          ranking.getEntries()[index++] = new ScoreEntry(nome, pontuacao);
         }
       }
       System.out.println("Ranking carregado de: " + filePath);

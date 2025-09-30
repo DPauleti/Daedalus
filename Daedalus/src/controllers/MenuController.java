@@ -6,7 +6,6 @@ public class MenuController {
     private Menu menu;
     private InputReader input;
     private String nome;
-    private int opcao;
     
     public MenuController() {
         this.menu = new Menu();
@@ -89,32 +88,10 @@ public class MenuController {
         return false;
     }
     
-    public void rankingmenu() {    
-        do {
-            menu.rankingmenu();
-            this.opcao = input.lerint();
-            
-            switch (opcao) {
-                case 1:
-                    rankingcontroller.printranking();
-                    break;
-                
-                case 2:
-                    system.out.print("digite o nome que deseja buscar: ");
-                    this.nome = input.lerstring();
-                    rankingcontroller.binarysearchbyname(nome);
-                    break;
-                
-                case 0:
-                    system.out.println("obrigado por jogar!");
-                    break;
-                
-                default:
-                    system.out.println("opção inválida, tente novamente.");
-                    break;
-            }
-            
-        } while (opcao != 0);
+    public boolean showRankingMenu() {
+        menu.rankingPrompt();
+        if (Character.toLowerCase(input.lerChar()) == 's') return true;
+        return false;
     }
 
     public char mainMenu() {

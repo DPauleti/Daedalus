@@ -82,7 +82,7 @@ public class Menu {
         System.out.println("Deseja salvar sua pontuação no ranking? [s/n]");
     }
 
-    public void rankingMenu() {
+    public void rankingMenuOptions() {
         System.out.println("\n--- MENU RANKING ---");
         System.out.println("1. Ver ranking");
         System.out.println("2. Buscar nome");
@@ -93,5 +93,17 @@ public class Menu {
     public void exit() {
         System.out.println("Obrigado por jogar!");
     }
+
+    public void rankingPrompt() {
+        System.out.println("Deseja ver o ranking? [s/n]");
+    }
+
+    public void searchByNamePrompt() {
+        System.out.print("Digite o nome que deseja buscar: ");
+    }
+    public void invalidCase() {
+        System.out.println("Opção inválida, tente novamente."); 
+    }
+
 
 }
