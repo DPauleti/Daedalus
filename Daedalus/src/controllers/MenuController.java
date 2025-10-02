@@ -87,12 +87,6 @@ public class MenuController {
         if (Character.toLowerCase(input.lerChar()) == 's') return true;
         return false;
     }
-    
-    public boolean showRankingMenu() {
-        menu.rankingPrompt();
-        if (Character.toLowerCase(input.lerChar()) == 's') return true;
-        return false;
-    }
 
     public char mainMenu() {
         menu.telaInicial(nome);

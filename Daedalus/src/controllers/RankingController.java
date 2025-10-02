@@ -77,21 +77,7 @@ public class RankingController {
     }
   }
   
-  // Ordenação por Insertion Sort (pontuação decrescente)
-  public void insertionSort() {
-    for (int i = 1; i < ranking.getEntries().length; i++) {
-      ScoreEntry key = ranking.getEntries()[i];
-      if (key == null) continue;
-      int j = i - 1;
-      
-      while (j >= 0 && ranking.getEntries()[j].getPontuacao() < key.getPontuacao()) {
-        ranking.getEntries()[j + 1] = ranking.getEntries()[j];
-        j--;
-      }
-      ranking.getEntries()[j + 1] = key;
-    }
-  }
-  
+  // quick sort por pontuação (decrescente)
   public void quickSort() {
     for (int i = ranking.getEntries().length - 1; i >= 0; i--)
     if (ranking.getEntries()[i] != null) {
@@ -132,24 +118,40 @@ public class RankingController {
   public int binarySearchByName(String nome) {
     int count = 0;
     for (ScoreEntry entry : ranking.getEntries()) {
-      if (entry != null) count++;
+      if (entry != null && entry.getNome() != null) count++;
+    }
+
+    if (count == 0) {
+        System.out.println("Jogador '" + nome + "' não encontrado.");
+        return -1;
     }
     
     ScoreEntry[] copia = new ScoreEntry[count];
     int idx = 0;
+
     for (ScoreEntry entry : ranking.getEntries()) {
-      if (entry != null) {
-        copia[idx++] = entry;
-      }
+      if (entry != null && entry.getNome() != null) copia[idx++] = entry;
+    }
+
+    int size = idx;
+    // insertion sort por nome (apenas até 'size')
+    for (int i = 1; i < size; i++) {
+        ScoreEntry key = copia[i];
+        int j = i - 1;
+        while (j >= 0 && copia[j].getNome().compareToIgnoreCase(key.getNome()) > 0) {
+            copia[j + 1] = copia[j];
+            j--;
+        }
+        copia[j + 1] = key;
     }
     
     int left = 0;
-    int right = copia.length - 1;
+    int right = size - 1;
     
     while (left <= right) {
       int mid = (left + right) / 2;
       int compare = copia[mid].getNome().compareToIgnoreCase(nome);
-      if (compare == 0) {
+      if (compare == 0) { // não tava entrando neste if
         for (int i = 0; i < ranking.getEntries().length; i++) {
           if (ranking.getEntries()[i] != null && ranking.getEntries()[i].equals(copia[mid])) {
             System.out.println("Encontrado: " + ranking.getEntries()[i].getNome() + " com pontuação " + ranking.getEntries()[i].getPontuacao());

@@ -94,10 +94,6 @@ public class Menu {
         System.out.println("Obrigado por jogar!");
     }
 
-    public void rankingPrompt() {
-        System.out.println("Deseja ver o ranking? [s/n]");
-    }
-
     public void searchByNamePrompt() {
         System.out.print("Digite o nome que deseja buscar: ");
     }
